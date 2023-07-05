@@ -65,8 +65,8 @@ class FTReport:
         for c in features:
             df_sub = cls.__get_stat(df_woe, c, label)
             iv = df_sub['iv'].sum()
-            auc = metric_helper.Metric.get_auc(df_woe['Defaulter'], df_woe[c])
-            ks = metric_helper.Metric.get_ks(df_woe['Defaulter'], df_woe[c])
+            auc = metric_helper.Metric.get_auc(df_woe[label], df_woe[c])
+            ks = metric_helper.Metric.get_ks(df_woe[label], df_woe[c])
             item = {
                 'feature': c,
                 'iv': iv,

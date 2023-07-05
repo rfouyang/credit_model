@@ -4,7 +4,7 @@ from pathlib import Path
 
 from sklearn.model_selection import train_test_split
 
-from config import ROOT_DIR
+from config import DATA_DIR
 
 
 class Dir:
@@ -20,7 +20,7 @@ class Dir:
 
 
 class Data:
-    fp_cache = Path(ROOT_DIR, "data")
+    fp_cache = DATA_DIR
 
     @classmethod
     def dump(cls, name, df, **kwargs):
