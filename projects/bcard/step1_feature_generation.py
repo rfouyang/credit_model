@@ -37,7 +37,7 @@ def load_data():
     df_repayment = pd.read_csv(fp_repayment, index_col=None)
 
     df_data = df_user.merge(df_repayment, on=profile.pk, how='left')
-    return df_data
+    return df_data, df_user, df_repayment
 
 
 def preprocess(df_data):
@@ -115,29 +115,34 @@ def get_features(df_data):
         print(f"generating overdue features for past {offset} months")
         df_ft = get_overdue_features(df_data, offset)
         df_feature = df_feature.merge(df_ft, on=profile.pk, how='left')
+        print(offset, len(df_feature))
 
     for offset in [3, 6, 12]:
         print(f"generating utilization features for past {offset} months")
         df_ft = get_utilization_features(df_data, offset)
         df_feature = df_feature.merge(df_ft, on=profile.pk, how='left')
+        print(offset, len(df_feature))
 
     for offset in [3, 6, 12]:
         print(f"generating payment features for past {offset} months")
         df_ft = get_payment_features(df_data, offset)
         df_feature = df_feature.merge(df_ft, on=profile.pk, how='left')
+        print(offset, len(df_feature))
 
     return df_feature
 
 
 def main():
-    df_data = load_data()
+    df_data, df_user, df_repayment = load_data()
+    print(len(df_data))
     df_data = preprocess(df_data)
     df_feature = get_features(df_data)
 
-    df_label = data_helper.Data.train_test_split(df_feature, profile.pk, profile.label)
+    df_label = data_helper.Data.train_test_split(df_user, profile.pk, profile.label)
 
     df_feature = df_label[[profile.pk, profile.sample_type]].merge(df_feature, on=profile.pk, how='left')
     data_helper.Data.dump('df_feature', df_feature, prefix=profile.prefix)
+    print(df_feature)
 
 
 if __name__ == '__main__':
