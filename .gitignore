@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+.DS_Store
+__pycache__/
+*.py[cod]
+*$py.class
+.idea/
+*.pyc
+
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+
+# IPython
+profile_default/
+ipython_config.py
+
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+
+# Scrapy stuff:
+.scrapy
+
+
+# C extensions
+*.so
+
+
+# Self defined
+/db.sqlite3
+/jupyter/*
+/robot_framework_test/results/
+/data/market_data/refinitiv_file/extraction_file/*
+email_service/email_queue/
+migration-version.sqlite3
+tables/migrations/
+tables_v2/migrations/
+update_pos_queue/
+/jupyter/
+!/tables/table_manager.py
+/test_formyself/
+
