@@ -34,7 +34,6 @@ class LightGBM(BaseEstimator, ClassifierMixin):
             class_weight="balanced",
             importance_type="gain",
             boosting_type="gbdt",
-            silent=True,
             n_jobs=8,
             random_state=417,
         )
@@ -48,7 +47,7 @@ class LightGBM(BaseEstimator, ClassifierMixin):
             df_xtrain[self.selected_features],
             df_ytrain,
             eval_set=eval_set,
-            verbose=50,
+            callbacks=[lgb.log_evaluation(2)],
             early_stopping_rounds=8000,
         )
 

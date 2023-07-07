@@ -30,7 +30,7 @@ def encoding_using_woe(df_feature):
 
 def main():
     df_feature = data_helper.Data.load('df_feature', prefix=profile.prefix)
-    # train_woe_encoding(df_feature)
+    train_woe_encoding(df_feature)
     encoding_using_woe(df_feature)
 
 

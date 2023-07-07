@@ -8,7 +8,7 @@ from projects.acard import profile
 
 
 def load_data():
-    fp_data = Path(config.DATA_DIR, 'acard_data', 'data.csv')
+    fp_data = Path(config.DATA_DIR, 'acard_data', 'application.csv')
     df_data = pd.read_csv(fp_data, index_col=None)
 
     return df_data

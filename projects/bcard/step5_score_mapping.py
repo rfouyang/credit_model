@@ -23,10 +23,10 @@ def stat_score_info(df_score):
 
 
 def main():
-    # df_woe = data_helper.Data.load('df_woe', prefix=profile.prefix)
-    # model = data_helper.Data.load('gbdt_model', prefix=profile.prefix)
-    # df_woe['prob'] = model.predict(df_woe[model.selected_features])
-    # score_mapping(df_woe)
+    df_woe = data_helper.Data.load('df_woe', prefix=profile.prefix)
+    model = data_helper.Data.load('gbdt_model', prefix=profile.prefix)
+    df_woe['prob'] = model.predict(df_woe[model.selected_features])
+    score_mapping(df_woe)
 
     df_score = data_helper.Data.load('df_score', prefix=profile.prefix)
     stat_score_info(df_score)

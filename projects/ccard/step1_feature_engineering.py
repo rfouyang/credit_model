@@ -6,13 +6,11 @@ from util import data_helper
 from projects.ccard import profile
 
 
-
 def load_data():
     fp_data = Path(config.DATA_DIR, 'ccard_data', 'collection.csv')
     df_data = pd.read_csv(fp_data, index_col=None)
 
     return df_data
-
 
 
 def main():
