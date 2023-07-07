@@ -2,7 +2,7 @@ from pathlib import Path
 
 import config
 from util import data_helper, woe_helper, report_helper
-from projects.bcard import profile
+from projects.ccard import profile
 
 
 def train_woe_encoding(df_feature):
@@ -30,7 +30,7 @@ def encoding_using_woe(df_feature):
 
 def main():
     df_feature = data_helper.Data.load('df_feature', prefix=profile.prefix)
-    # train_woe_encoding(df_feature)
+    train_woe_encoding(df_feature)
     encoding_using_woe(df_feature)
 
 

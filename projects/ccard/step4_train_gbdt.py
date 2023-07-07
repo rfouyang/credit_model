@@ -1,5 +1,5 @@
 from util import data_helper, lgbm_helper, report_helper
-from projects.bcard import profile
+from projects.ccard import profile
 
 
 def train_gbdt(df_woe):
