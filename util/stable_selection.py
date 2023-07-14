@@ -514,3 +514,43 @@ class StabilitySelection(BaseEstimator, TransformerMixin):
             return np.empty(0).reshape((X.shape[0], 0))
 
         return X[:, safe_mask(X, mask)]
+
+
+def select(df_xtrain, df_ytrain):
+    from sklearn.linear_model import LogisticRegression
+
+    base_estimator = LogisticRegression(penalty="l1", solver="saga")
+
+    selector = StabilitySelection(
+        base_estimator=base_estimator, lambda_name='C',
+        lambda_grid=np.logspace(-5, 2, 10)
+    )
+
+    selector.fit(df_xtrain, df_ytrain)
+    return selector
+
+
+def main():
+    from pathlib import Path
+    import pandas as pd
+    import config
+    df_woe = pd.read_csv(Path(config.DATA_DIR, 'tutorial', 'data_woe_result.csv'), index_col=None)
+
+    num_cols = ['Collateral_valuation', 'Age', 'Properties_Total', 'Amount', 'Term', 'Historic_Loans', 'Current_Loans',
+                'Max_Arrears']
+    cat_cols = ['Region', 'Area', 'Activity', 'Guarantor', 'Collateral', 'Properties_Status']
+    features = num_cols + cat_cols
+    label = 'Defaulter'
+
+    selector = select(df_woe[features], df_woe[label])
+
+    df_fs_stable = pd.DataFrame({
+        'feature': features,
+        'stable_select': selector.get_support(),
+        'stable_score': selector.stability_scores_.max(axis=1)})
+    print(df_fs_stable)
+    return df_fs_stable
+
+
+if __name__ == '__main__':
+    main()
