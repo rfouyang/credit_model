@@ -86,3 +86,27 @@ class Metric:
     def get_iv(cls, sr_feature, sr_label):
         df_stat = cls.get_stat(sr_feature, sr_label)
         return df_stat["iv"].sum()
+
+    @classmethod
+    def get_ks_lift_table(cls, ytrue, yprob, **kwargs):
+        ascending = kwargs.get('ascending', False)
+
+        df_stat = pd.DataFrame({'label': ytrue, 'prob': yprob})
+        df_stat = df_stat.sort_values(by='prob', ascending=ascending).reset_index()
+
+        df_stat['total'] = 1
+        df_stat['good'] = 1 - df_stat['label']
+        df_stat['bad'] = df_stat['label']
+
+        df_stat['cum_total'] = df_stat['total'].cumsum()
+        df_stat['cum_good'] = df_stat['good'].cumsum()
+        df_stat['cum_bad'] = df_stat['bad'].cumsum()
+
+        df_stat['total_cdf'] = df_stat['cum_total'] / df_stat['total'].sum()
+        df_stat['good_cdf'] = df_stat['cum_good'] / df_stat['good'].sum()
+        df_stat['bad_cdf'] = df_stat['cum_bad'] / df_stat['bad'].sum()
+
+        df_stat['ks'] = df_stat['bad_cdf'] - df_stat['good_cdf']
+        df_stat['lift'] = df_stat['bad_cdf'] / df_stat['total_cdf']
+
+        return df_stat
