@@ -147,3 +147,4 @@ wheel==0.38.4
 win-inet-pton==1.1.0
 y-py==0.5.9
 ypy-websocket==0.8.2
+gradio
