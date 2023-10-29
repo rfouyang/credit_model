@@ -8,7 +8,7 @@ def score_mapping(df_woe):
     df_woe['score'] = sb.transform(df_woe['prob'])
     df_report = report_helper.ModelReport.get_report(df_woe, profile.sample_type, 'score', profile.label)
     print(df_report)
-
+    print(df_woe)
     data_helper.Data.dump('df_score', df_woe, prefix=profile.prefix)
 
 

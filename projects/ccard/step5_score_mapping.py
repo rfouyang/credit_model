@@ -3,7 +3,7 @@ from projects.ccard import profile
 
 
 def score_mapping(df_woe):
-    sb = score_helper.Score()
+    sb = score_helper.Score(n_degree=3)
     sb.fit(df_woe['prob'], df_woe[profile.label])
     df_woe['score'] = sb.transform(df_woe['prob'])
     df_report = report_helper.ModelReport.get_report(df_woe, profile.sample_type, 'score', profile.label)

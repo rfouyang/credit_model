@@ -35,7 +35,7 @@ class LightGBM(BaseEstimator, ClassifierMixin):
             importance_type="gain",
             boosting_type="gbdt",
             n_jobs=8,
-            random_state=417,
+            random_state=417, verbose=0
         )
 
         eval_set = [(df_xtrain[self.selected_features], df_ytrain)]
