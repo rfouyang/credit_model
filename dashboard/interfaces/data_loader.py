@@ -69,27 +69,37 @@ class UI:
     @classmethod
     def create_ui(cls):
         with gr.Blocks() as block:
+            # loading data
             with gr.Row():
-                loader = gr.inputs.components.File(type='file', label='Dataset')
-                btn_load = gr.Button("load")
+                with gr.Column():
+                    with gr.Row():
+                        loader = gr.inputs.components.File(type='file', label='Dataset')
+                    with gr.Row():
+                        btn_load = gr.Button("load", variant='primary', size='sm')
+
+                with gr.Column():
+                    frame = gr.outputs.components.Dataframe(type='pandas', interactive=True, label="Data Table")
+
+            # set columns
             with gr.Row():
-                frame = gr.outputs.components.Dataframe(type='pandas', label="Data Table")
-            with gr.Row():
-                slt_pk = gr.inputs.components.Dropdown(choices=list(), label="Primary Ley")
-                slt_label = gr.inputs.components.Dropdown(choices=list(), label="Label")
-                slt_exclude = gr.inputs.components.Dropdown(choices=list(), label="Exclude", multiselect=True)
-            with gr.Row():
-                btn_save = gr.Button("Save dataset to Pickle format")
-                output = gr.outputs.components.File(label='Dataset in PKL Format')
+                with gr.Column():
+                    slt_pk = gr.inputs.components.Dropdown(choices=list(), label="Primary Ley")
+                    slt_label = gr.inputs.components.Dropdown(choices=list(), label="Label")
+                    slt_exclude = gr.inputs.components.Dropdown(choices=list(), label="Exclude", multiselect=True)
+                    btn_save = gr.Button("Save", variant='primary', size='sm')
+
+                with gr.Column():
+                    output = gr.outputs.components.File(label='Dataset in PKL Format')
 
             btn_load.click(cls.listner_button_load, inputs=loader,
                            outputs=[frame, slt_pk, slt_label, slt_exclude])
+            btn_save.click(cls.listner_button_save, None, outputs=output)
 
             slt_pk.change(cls.set_pk, slt_pk, Param.pk)
             slt_label.change(cls.set_label, slt_label, Param.label)
             slt_exclude.change(cls.set_exclude, slt_exclude, Param.exclude)
 
-            btn_save.click(cls.listner_button_save, None, outputs=output)
+
 
             return block
 
